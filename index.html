@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自衛消防編組演練指南</title>
+<style>
+/* ─── FONT STACK: Meiryo UI first ─── */
+:root {
+  --font: 'Meiryo UI', 'Meiryo', 'メイリオ', 'Microsoft JhengHei UI', 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+
+  --gold:       #F0C040;
+  --gold-bright:#FFD966;
+  --gold-dim:   rgba(240,192,64,0.18);
+  --gold-border:rgba(240,192,64,0.45);
+
+  --night:      #5BB8FF;
+  --night-bright:#85CCFF;
+  --night-dim:  rgba(91,184,255,0.18);
+  --night-border:rgba(91,184,255,0.45);
+
+  --danger:     #FF4D4D;
+  --danger-dim: rgba(255,77,77,0.18);
+
+  --bg:         #050505;
+  --bg2:        #0D0D0D;
+  --bg3:        #141414;
+  --bg4:        #1C1C1C;
+
+  --text:       #F5F0E8;
+  --text-mid:   #C8BFA8;
+  --text-dim:   #7A7060;
+  --border:     rgba(240,192,64,0.22);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ════════════════════ HEADER ════════════════════ */
+.hd {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  background: rgba(5,5,5,0.97);
+  border-bottom: 2px solid var(--gold);
+  padding: 0 24px;
+  display:flex; align-items:center; justify-content:space-between;
+  height: 56px;
+  box-shadow: 0 4px 32px rgba(240,192,64,0.15);
+}
+
+.hd-logo {
+  display:flex; align-items:center; gap:12px;
+}
+
+.hd-icon {
+  font-size: 22px;
+  filter: drop-shadow(0 0 8px rgba(240,192,64,0.8));
+}
+
+.hd-title {
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  letter-spacing: 3px;
+}
+
+.hd-nav { display:flex; gap:6px; }
+
+.hd-btn {
+  padding: 6px 16px;
+  background: transparent;
+  border: 1.5px solid var(--text-dim);
+  color: var(--text-dim);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor:pointer;
+  transition: all 0.25s;
+}
+
+.hd-btn:hover, .hd-btn.on {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+  background: var(--gold-dim);
+  box-shadow: 0 0 12px rgba(240,192,64,0.25);
+}
+
+.hd-btn.night:hover, .hd-btn.night.on {
+  border-color: var(--night);
+  color: var(--night-bright);
+  background: var(--night-dim);
+  box-shadow: 0 0 12px rgba(91,184,255,0.25);
+}
+
+/* ════════════════════ HERO ════════════════════ */
+.hero {
+  min-height: 100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  padding: 80px 20px 60px;
+  position:relative; overflow:hidden;
+}
+
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 40%, rgba(240,192,64,0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 15% 75%, rgba(91,184,255,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 35% at 85% 20%, rgba(240,192,64,0.06) 0%, transparent 55%);
+  pointer-events:none;
+}
+
+.hero-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 7px;
+  color: var(--gold);
+  margin-bottom: 24px;
+  opacity:0; animation: up 0.7s 0.1s ease forwards;
+}
+
+.hero-h1 {
+  font-size: clamp(34px, 6vw, 68px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  margin-bottom: 18px;
+  opacity:0; animation: up 0.7s 0.2s ease forwards;
+}
+
+.hero-h1 em {
+  color: var(--gold-bright);
+  font-style:normal;
+  text-shadow: 0 0 40px rgba(240,192,64,0.5);
+}
+
+.hero-sub {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-mid);
+  letter-spacing: 2px;
+  margin-bottom: 56px;
+  opacity:0; animation: up 0.7s 0.3s ease forwards;
+}
+
+.hero-cards {
+  display:flex; gap:20px; flex-wrap:wrap; justify-content:center;
+  opacity:0; animation: up 0.7s 0.4s ease forwards;
+}
+
+.mode-card {
+  width: 260px;
+  border: 2px solid var(--gold-border);
+  background: var(--bg2);
+  padding: 40px 28px 32px;
+  cursor:pointer; text-decoration:none; display:block;
+  position:relative; overflow:hidden;
+  transition: all 0.35s;
+}
+
+.mode-card::before {
+  content:'';
+  position:absolute; bottom:0; left:0; right:0; height:3px;
+  background: var(--gold);
+  transform:scaleX(0); transform-origin:left;
+  transition: transform 0.35s;
+}
+
+.mode-card:hover::before { transform:scaleX(1); }
+.mode-card:hover {
+  border-color: var(--gold-bright);
+  background: var(--bg3);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 48px rgba(240,192,64,0.2);
+}
+
+.mode-card.night { border-color: var(--night-border); }
+.mode-card.night::before { background: var(--night); }
+.mode-card.night:hover {
+  border-color: var(--night-bright);
+  box-shadow: 0 12px 48px rgba(91,184,255,0.2);
+}
+
+.mc-icon { font-size:42px; margin-bottom:16px; display:block;
+  filter:drop-shadow(0 0 10px rgba(240,192,64,0.6)); }
+.mode-card.night .mc-icon { filter:drop-shadow(0 0 10px rgba(91,184,255,0.6)); }
+
+.mc-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+.mode-card.night .mc-title { color: var(--night-bright); }
+
+.mc-desc {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-mid);
+  line-height: 1.9;
+}
+
+.mc-time {
+  margin-top:18px;
+  font-size:12px; font-weight:700;
+  letter-spacing:3px; color:var(--gold);
+  border-top:1px solid var(--gold-border);
+  padding-top:12px;
+}
+.mode-card.night .mc-time { color:var(--night); border-color:var(--night-border); }
+
+/* scroll hint */
+.scroll-hint {
+  position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  font-size:10px; font-weight:700; letter-spacing:4px; color:var(--text-dim);
+  opacity:0; animation: up 0.7s 1.0s ease forwards;
+}
+.scroll-line {
+  width:1px; height:44px;
+  background:linear-gradient(to bottom, var(--gold), transparent);
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%,100%{opacity:0.3} 50%{opacity:1}
+}
+
+/* ════════════════════ SECTION WRAP ════════════════════ */
+.section-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 100px 24px 80px;
+}
+
+.sec-eyebrow {
+  font-size: 11px; font-weight:700;
+  letter-spacing: 5px; color: var(--gold);
+  margin-bottom:10px;
+}
+.sec-eyebrow.night { color:var(--night); }
+
+.sec-title {
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.sec-scenario {
+  font-size: 14px; font-weight:500;
+  color: var(--text-mid);
+  max-width:680px; line-height:1.9;
+  border-left: 4px solid var(--gold);
+  padding-left: 18px;
+  margin-bottom: 48px;
+  background: var(--gold-dim);
+  padding: 16px 20px 16px 20px;
+  border-left: 4px solid var(--gold);
+}
+.sec-scenario.night { border-color:var(--night); background:var(--night-dim); }
+
+/* ════════════════════ OVERVIEW GRID ════════════════════ */
+.ov-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap:10px; margin-bottom:48px;
+}
+
+.ov-card {
+  border: 1.5px solid var(--gold-border);
+  background: var(--bg2);
+  padding: 18px 16px;
+  cursor:pointer; transition:all 0.25s;
+  position:relative;
+}
+
+.ov-card:hover, .ov-card.sel {
+  border-color: var(--gold-bright);
+  background: var(--bg3);
+  box-shadow: 0 0 20px rgba(240,192,64,0.15);
+}
+.ov-card.night:hover, .ov-card.night.sel {
+  border-color: var(--night-bright);
+  box-shadow: 0 0 20px rgba(91,184,255,0.15);
+}
+
+.ov-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:var(--gold);
+  position:absolute; top:14px; right:14px;
+  box-shadow: 0 0 8px var(--gold);
+}
+.ov-card.night .ov-dot { background:var(--night); box-shadow:0 0 8px var(--night); }
+
+.ov-num {
+  font-size:10px; font-weight:700;
+  letter-spacing:2px; color:var(--text-dim);
+  margin-bottom:6px;
+}
+
+.ov-name {
+  font-size: 14px; font-weight:700;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ════════════════════ ROLE TABS ════════════════════ */
+.role-tabs {
+  display:flex; flex-wrap:wrap; gap:0;
+  border-bottom: 2px solid var(--gold-border);
+  margin-bottom: 36px;
+}
+
+.rt {
+  padding:12px 18px;
+  font-family:var(--font); font-size:13px; font-weight:700;
+  color:var(--text-dim); letter-spacing:1px;
+  border:none; background:none;
+  border-bottom:3px solid transparent; margin-bottom:-2px;
+  cursor:pointer; transition:all 0.25s; white-space:nowrap;
+}
+.rt:hover { color:var(--text); }
+.rt.on { color:var(--gold-bright); border-bottom-color:var(--gold-bright); }
+.rt.night.on { color:var(--night-bright); border-bottom-color:var(--night-bright); }
+
+/* ════════════════════ ROLE CONTENT ════════════════════ */
+.rc { display:none; }
+.rc.on { display:block; }
+
+/* ════════════════════ TIMELINE ════════════════════ */
+.tl {
+  position:relative; padding-left:44px;
+}
+
+.tl::before {
+  content:''; position:absolute;
+  left:12px; top:0; bottom:0; width:2px;
+  background:linear-gradient(to bottom, var(--gold) 0%, rgba(240,192,64,0.1) 100%);
+}
+.tl.night::before {
+  background:linear-gradient(to bottom, var(--night) 0%, rgba(91,184,255,0.1) 100%);
+}
+
+/* ─ STEP ─ */
+.step {
+  position:relative;
+  margin-bottom:28px;
+  background: var(--bg2);
+  border: 1.5px solid var(--gold-border);
+  padding: 22px 26px 22px 26px;
+  transition: border-color 0.2s;
+}
+.step:hover { border-color:var(--gold); }
+.tl.night .step { border-color:var(--night-border); }
+.tl.night .step:hover { border-color:var(--night); }
+
+.step::before {
+  content:''; position:absolute;
+  left:-38px; top:24px;
+  width:12px; height:12px; border-radius:50%;
+  background:var(--gold);
+  border:3px solid var(--bg);
+  box-shadow: 0 0 12px rgba(240,192,64,0.7);
+}
+.tl.night .step::before {
+  background:var(--night);
+  box-shadow: 0 0 12px rgba(91,184,255,0.7);
+}
+
+/* step header */
+.sh {
+  display:flex; align-items:flex-start; gap:14px; margin-bottom:16px;
+}
+
+.sn {
+  font-size: 32px; font-weight:700;
+  color: var(--gold); line-height:1; min-width:44px;
+  text-shadow: 0 0 20px rgba(240,192,64,0.5);
+}
+.tl.night .sn { color:var(--night); text-shadow:0 0 20px rgba(91,184,255,0.5); }
+
+.sm { flex:1; }
+
+.st {
+  font-size:11px; font-weight:700;
+  letter-spacing:3px; color:var(--text-dim); margin-bottom:5px;
+}
+
+.sa {
+  font-size: 17px; font-weight:700;
+  color: var(--text);
+  letter-spacing:0.04em;
+  line-height:1.4;
+}
+
+/* step body */
+.sb {
+  font-size:14px; font-weight:500;
+  color: var(--text-mid);
+  line-height:1.9;
+  padding-left: 58px;
+}
+
+.sb p { margin-bottom:8px; }
+
+/* ── DIALOGUE (台詞) ── */
+.dg {
+  margin: 14px 0;
+  background: var(--bg3);
+  border-left: 4px solid var(--gold);
+  padding: 14px 18px;
+  position:relative;
+}
+.tl.night .dg { border-left-color:var(--night); }
+
+.dg-label {
+  font-size:10px; font-weight:700;
+  letter-spacing:3px; color:var(--gold);
+  margin-bottom:6px;
+}
+.tl.night .dg-label { color:var(--night); }
+
+.dg-text {
+  font-size: 15px; font-weight:700;
+  color: var(--text);
+  line-height:1.8;
+  font-style:italic;
+}
+
+/* ── CHANT BOX (口訣) ── */
+.chant {
+  margin: 14px 0;
+  background: var(--gold-dim);
+  border: 2px solid var(--gold);
+  padding: 16px 20px;
+  text-align:center;
+  box-shadow: inset 0 0 30px rgba(240,192,64,0.08), 0 0 20px rgba(240,192,64,0.1);
+}
+.tl.night .chant {
+  background:var(--night-dim); border-color:var(--night);
+  box-shadow: inset 0 0 30px rgba(91,184,255,0.08), 0 0 20px rgba(91,184,255,0.1);
+}
+
+.chant-label {
+  font-size:11px; font-weight:700;
+  letter-spacing:3px; color:var(--gold);
+  margin-bottom:10px;
+}
+.tl.night .chant-label { color:var(--night); }
+
+.chant-text {
+  font-size: 17px; font-weight:700;
+  color: var(--gold-bright);
+  letter-spacing:0.1em; line-height:2;
+  text-shadow: 0 0 20px rgba(240,192,64,0.4);
+}
+.tl.night .chant-text {
+  color:var(--night-bright);
+  text-shadow:0 0 20px rgba(91,184,255,0.4);
+}
+
+/* ── PROCEDURE LIST ── */
+.proc { list-style:none; margin:12px 0; }
+
+.proc li {
+  display:flex; gap:12px; align-items:flex-start;
+  font-size:14px; font-weight:500;
+  color:var(--text-mid);
+  line-height:1.8; margin-bottom:8px;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.proc li:last-child { border-bottom:none; margin-bottom:0; }
+
+.pn {
+  min-width:28px; height:24px;
+  border: 2px solid var(--gold);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:700;
+  color:var(--gold); flex-shrink:0; margin-top:2px;
+  background:var(--gold-dim);
+}
+.tl.night .pn { border-color:var(--night); color:var(--night); background:var(--night-dim); }
+
+.proc li strong {
+  color:var(--text); font-weight:700;
+}
+
+/* ── ALERT TAGS ── */
+.tag {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 14px; font-size:12px; font-weight:700;
+  letter-spacing:1px; margin:6px 0; border:1.5px solid;
+}
+.tag.urgent {
+  border-color:var(--danger); color:var(--danger);
+  background:var(--danger-dim);
+  animation:blink 1.5s ease infinite;
+}
+.tag.note {
+  border-color:var(--text-dim); color:var(--text-mid);
+  background:rgba(255,255,255,0.03);
+  font-size:12.5px; font-weight:500;
+  padding:8px 14px; display:block;
+  line-height:1.7;
+}
+
+@keyframes blink {
+  0%,100%{box-shadow:none} 50%{box-shadow:0 0 12px rgba(255,77,77,0.4)}
+}
+
+/* ════════════════════ MODE SECTION ════════════════════ */
+.mode-section { display:none; }
+.mode-section.on { display:block; }
+
+/* ════════════════════ FOOTER ════════════════════ */
+.footer {
+  border-top: 2px solid var(--gold-border);
+  padding: 36px 24px;
+  text-align:center;
+  font-size:12px; font-weight:700;
+  letter-spacing:2px; color:var(--text-dim);
+}
+
+.footer strong { color:var(--gold-bright); display:block; margin-bottom:8px; font-size:14px; }
+
+/* ════════════════════ ANIMATIONS ════════════════════ */
+@keyframes up {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ════════════════════ MOBILE ════════════════════ */
+@media (max-width:640px) {
+  .hd { padding:0 12px; }
+  .hd-title { font-size:12px; letter-spacing:1px; }
+  .hd-btn { padding:5px 10px; font-size:11px; }
+  .hero { padding:76px 16px 50px; }
+  .hero-h1 { font-size:clamp(28px,8vw,44px); }
+  .hero-cards { flex-direction:column; align-items:center; }
+  .mode-card { width:100%; max-width:320px; }
+  .section-wrap { padding:80px 16px 60px; }
+  .ov-grid { grid-template-columns:1fr 1fr; gap:8px; }
+  .rt { padding:10px 10px; font-size:12px; }
+  .tl { padding-left:28px; }
+  .tl::before { left:8px; }
+  .step::before { left:-26px; }
+  .sb { padding-left:0; }
+  .step { padding:16px 16px; }
+  .sn { font-size:26px; min-width:36px; }
+  .sa { font-size:15px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hd">
+  <div class="hd-logo">
+    <span class="hd-icon">🔥</span>
+    <span class="hd-title">自衛消防編組演練指南</span>
+  </div>
+  <nav class="hd-nav">
+    <button class="hd-btn on" onclick="showMode('home')">首頁</button>
+    <button class="hd-btn" onclick="showMode('day')">☀️ 日間演練</button>
+    <button class="hd-btn night" onclick="showMode('night')">🌙 夜間演練</button>
+  </nav>
+</header>
+
+<!-- ════════════ HERO ════════════ -->
+<section class="hero" id="sec-home">
+  <div class="hero-tag">FIRE DRILL GUIDE · 自衛消防演練</div>
+  <h1 class="hero-h1">自衛消防<em>編組演練</em><br>完整指南</h1>
+  <p class="hero-sub">選擇演練時段 · 查閱您的編組職責 · 熟記台詞與動作要領</p>
+
+  <div class="hero-cards">
+    <a class="mode-card" href="#" onclick="showMode('day');return false;">
+      <span class="mc-icon">☀️</span>
+      <div class="mc-title">日間演練</div>
+      <div class="mc-desc">適用下午時段<br>各編組職責・通報流程<br>完整滅火疏散程序</div>
+      <div class="mc-time">14:20 — 14:50</div>
+    </a>
+    <a class="mode-card night" href="#" onclick="showMode('night');return false;">
+      <span class="mc-icon">🌙</span>
+      <div class="mc-title">夜間演練</div>
+      <div class="mc-desc">適用深夜時段<br>夜間值班人員配置<br>機房火災處置程序</div>
+      <div class="mc-time">22:50 — 23:15</div>
+    </a>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     DAY MODE
+════════════════════════════════════════════ -->
+<div class="mode-section" id="sec-day">
+<section class="section-wrap">
+  <div class="sec-eyebrow">☀️ DAY MODE · 日間演練</div>
+  <h2 class="sec-title">日間自衛消防編組演練</h2>
+  <div class="sec-scenario">
+    <strong>狀況設定：</strong>餐廳服務員於包廂整理時，發現邊櫃火源使用不當導致冒煙起火引發火災。由責任區通報至客服中心，啟動全館應變程序。初期滅火失敗後進行全館疏散。
+  </div>
+
+  <div class="ov-grid">
+    <div class="ov-card" onclick="showRole('day','d-resp')"><div class="ov-dot"></div><div class="ov-num">ROLE 01</div><div class="ov-name">責任區人員<br>（服務員・滅火班）</div></div>
+    <div class="ov-card" onclick="showRole('day','d-mgr')"><div class="ov-dot"></div><div class="ov-num">ROLE 02</div><div class="ov-name">責任區主管<br>（外場副理）</div></div>
+    <div class="ov-card" onclick="showRole('day','d-call')"><div class="ov-dot"></div><div class="ov-num">ROLE 03</div><div class="ov-name">客服中心</div></div>
+    <div class="ov-card" onclick="showRole('day','d-fire')"><div class="ov-dot"></div><div class="ov-num">ROLE 04</div><div class="ov-name">館內滅火班<br>（安全部・工程部・禮賓部）</div></div>
+    <div class="ov-card" onclick="showRole('day','d-duty')"><div class="ov-dot"></div><div class="ov-num">ROLE 05</div><div class="ov-name">大廳值班經理</div></div>
+    <div class="ov-card" onclick="showRole('day','d-guide')"><div class="ov-dot"></div><div class="ov-num">ROLE 06</div><div class="ov-name">避難引導班<br>（通報班）</div></div>
+    <div class="ov-card" onclick="showRole('day','d-eng')"><div class="ov-dot"></div><div class="ov-num">ROLE 07</div><div class="ov-name">工程部<br>（安全防護班）</div></div>
+    <div class="ov-card" onclick="showRole('day','d-asm')"><div class="ov-dot"></div><div class="ov-num">ROLE 08</div><div class="ov-name">集結區<br>（客務部・人資部）</div></div>
+  </div>
+
+  <div class="role-tabs" id="day-tabs">
+    <button class="rt on" onclick="showRole('day','d-resp')">責任區人員</button>
+    <button class="rt" onclick="showRole('day','d-mgr')">責任區主管</button>
+    <button class="rt" onclick="showRole('day','d-call')">客服中心</button>
+    <button class="rt" onclick="showRole('day','d-fire')">館內滅火班</button>
+    <button class="rt" onclick="showRole('day','d-duty')">大廳值班經理</button>
+    <button class="rt" onclick="showRole('day','d-guide')">避難引導班</button>
+    <button class="rt" onclick="showRole('day','d-eng')">工程部</button>
+    <button class="rt" onclick="showRole('day','d-asm')">集結區</button>
+  </div>
+
+  <!-- ── 責任區人員 ── -->
+  <div class="rc on" id="d-resp">
+    <div class="tl">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">狀況發生・第一步</div>
+            <div class="sa">発見起火 → 大聲高喊 → 取滅火器</div>
+          </div>
+        </div>
+        <div class="sb">
+          <p>於現場作業時，<strong>發現包廂邊櫃冒煙起火</strong>，立即執行：</p>
+          <div class="chant">
+            <div class="chant-label">🔊 立即高喊（兩遍）</div>
+            <div class="chant-text">失　火　了　！<br>失　火　了　！</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">1</div><span>向<strong>責任區主管</strong>通報：包廂邊櫃起火，請求協助支援。</span></li>
+            <li><div class="pn">2</div><span>立即取附近<strong>滅火器1支</strong>，實施初步滅火（<strong>約10秒</strong>）</span></li>
+            <li><div class="pn">3</div><span>使用完畢放倒，<strong>再取另一支</strong>滅火器持續滅火</span></li>
+          </ul>
+          <div class="chant">
+            <div class="chant-label">🗣️ 滅火口訣（需大聲複誦）</div>
+            <div class="chant-text">拉插銷 → 拉皮管瞄準火源<br>壓握把 → 對準火源根部左右掃射</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">館內滅火班抵達後</div>
+            <div class="sa">交接滅火任務 → 轉任避難引導</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span>待館內滅火班到達後，<strong>將滅火器放下</strong></span></li>
+            <li><div class="pn">2</div><span><strong>先向責任區主管報到</strong>，依指示轉移任務</span></li>
+            <li><div class="pn">3</div><span>轉任<strong>避難引導</strong>，協助引導樓層賓客與員工疏散</span></li>
+            <li><div class="pn">4</div><span>完成後向主管回報，前往<strong>1F集結區</strong>集合</span></li>
+          </ul>
+          <div class="dg">
+            <div class="dg-label">📢 向責任區主管回報</div>
+            <div class="dg-text">2F前後場員工均已疏散完畢。</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 責任區主管 ── -->
+  <div class="rc" id="d-mgr">
+    <div class="tl">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">接獲服務員通報後</div>
+            <div class="sa">立即指揮通報班 → 通知客服中心（8119）</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="dg">
+            <div class="dg-label">📞 通報班撥打8119緊急消防專線</div>
+            <div class="dg-text">（餐廳名稱）包廂發生火警，請求協助派人支援。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">1</div><span>通報完成後向主管報告</span></li>
+            <li><div class="pn">2</div><span>隨即<strong>取附近滅火器支援滅火</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">確認火災・指揮各編組</div>
+            <div class="sa">掌握現場 → 指揮滅火班 → 指示避難引導</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="dg">
+            <div class="dg-label">📢 指揮責任區滅火班</div>
+            <div class="dg-text">持續進行滅火動作。</div>
+          </div>
+          <div class="dg">
+            <div class="dg-label">📢 指示避難引導班</div>
+            <div class="dg-text">避難引導班立即先將外場員工疏散，完成疏散後向我回報狀況。<br>避難引導班立即進行前後場員工疏散動作，完成後向我回報狀況。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">3</div><span>待<strong>館內滅火班長</strong>抵達，接續協助滅火及疏散</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">03</div>
+          <div class="sm">
+            <div class="st">全館疏散時</div>
+            <div class="sa">確認防火區劃 → 全員疏散</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="dg">
+            <div class="dg-label">📢 下令</div>
+            <div class="dg-text">確認完成防火區劃，滅火班將門帶上後所有人員全體疏散。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">1</div><span>確認客人疏散完畢，轉往<strong>1F集結區</strong>集合</span></li>
+          </ul>
+          <div class="tag note">⚠️ 進入包廂確認後於門上劃「<span style="color:#4AE08A;font-weight:900;font-size:1.15em;text-shadow:0 0 8px rgba(74,224,138,0.7);">O</span>」記號；無法進入則劃「<span style="color:#FF4D4D;font-weight:900;font-size:1.15em;text-shadow:0 0 8px rgba(255,77,77,0.7);">Ｘ</span>」記號</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 客服中心 ── -->
+  <div class="rc" id="d-call">
+    <div class="tl">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">接獲火警通報後・立即</div>
+            <div class="sa">呼叫滅火班 · 通知大廳經理 · 傳Line</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="dg">
+            <div class="dg-label">📻 無線電呼叫滅火班</div>
+            <div class="dg-text">（地點）發生火警，請立即前往處理，完畢。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">2</div><span>電話<strong>立即通知大廳值班經理</strong>前往現場協助處理</span></li>
+            <li><div class="pn">3</div><span><strong>傳發Line群組訊息</strong>通知相關主管知悉</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">確認成災後</div>
+            <div class="sa">撥打119 · 請求消防隊支援</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="dg">
+            <div class="dg-label">📞 撥打119</div>
+            <div class="dg-text">您好！我這裡是○○酒店客服專員○○○，目前本館（火災地點）發生火災，正實施初步滅火，請求協助；地址：○○路○○號，電話：○○○○，謝謝。</div>
+          </div>
+          <div class="dg">
+            <div class="dg-label">📻 呼叫滅火班確認</div>
+            <div class="dg-text">已請求消防隊前來支援，完畢。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">03</div>
+          <div class="sm">
+            <div class="st">全館疏散時</div>
+            <div class="sa">播放廣播 · 成立指揮中心 · 攜帶資料</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span><strong>播放全館疏散廣播</strong>（中文・英文）</span></li>
+            <li><div class="pn">2</div><span>傳發Line火災群組訊息通知各相關單位主管</span></li>
+            <li><div class="pn">3</div><span>攜帶資料<strong>協助成立指揮中心</strong></span></li>
+          </ul>
+          <div class="tag note">📋 需攜帶：聯絡電話資料・演習資料・簡易處理程序・手機・無線電・廣播內容・當日全館旅客名單</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 館內滅火班 ── -->
+  <div class="rc" id="d-fire">
+    <div class="tl">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">接獲呼叫後</div>
+            <div class="sa">各成員回覆確認 → 立即前往現場</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">班長</div><span><strong>滅火班班長收到，立即前往處理。</strong></span></li>
+            <li><div class="pn">安全部</div><span><strong>安全部滅火班收到，立即前往處理。</strong></span></li>
+            <li><div class="pn">工程部</div><span><strong>工程部滅火班收到，立即前往處理。</strong></span></li>
+            <li><div class="pn">禮賓部</div><span><strong>禮賓部收到，立即前往處理。</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">抵達現場後（班長指揮）</div>
+            <div class="sa">接手滅火 → 回報客服 → 拉水帶</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="dg">
+            <div class="dg-label">📢 安全部告知責任區滅火班</div>
+            <div class="dg-text">現場由我接手，你轉任避難引導。</div>
+          </div>
+          <div class="dg">
+            <div class="dg-label">📻 班長回報客服中心</div>
+            <div class="dg-text">呼叫客服中心：（地點）確定起火，目前正實施初步滅火後續再報，完畢。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">3</div><span>班長率領<strong>禮賓部</strong>前往消防栓箱拉水帶</span></li>
+            <li><div class="pn">4</div><span>指揮<strong>工程部</strong>關閉電力・空調・瓦斯，開啟排煙閘門</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">03</div>
+          <div class="sm">
+            <div class="st">水帶就位後</div>
+            <div class="sa">開水 → 直線射水 → 滅火</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">班長</div><span>下達：<strong>「工程部開水。」</strong></span></li>
+            <li><div class="pn">工程部</div><span>複誦：<strong>「開水。」</strong>並開啟水閥</span></li>
+            <li><div class="pn">水瞄手</div><span><strong>採直線射水，姿勢放低，雙手背內夾</strong></span></li>
+          </ul>
+          <div class="chant">
+            <div class="chant-label">🔊 水瞄手口令</div>
+            <div class="chant-text">採直線射水<br>（滅火失敗轉為霧狀防護）</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">04</div>
+          <div class="sm">
+            <div class="st">⚠️ 火勢過大・無法撲滅時</div>
+            <div class="sa">轉霧狀防護 → 撤退 → 回報</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="tag urgent">🚨 緊急：火勢擴大</div>
+          <div class="dg">
+            <div class="dg-label">📢 班長下令</div>
+            <div class="dg-text">滅火失敗轉為霧狀防護，後退。</div>
+          </div>
+          <div class="dg">
+            <div class="dg-label">📻 回報客服中心</div>
+            <div class="dg-text">現場火勢擴大無法撲滅，請向上通報，現在實施撤離，完畢。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">1</div><span>退出火場後<strong>工程部關閉水閥</strong></span></li>
+            <li><div class="pn">2</div><span>撤退時<strong>沿途所經門確實關閉</strong></span></li>
+            <li><div class="pn">3</div><span><strong>水帶拉回消防栓箱</strong>後才離開</span></li>
+            <li><div class="pn">4</div><span>前往<strong>1F集結區</strong>集合</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 大廳值班經理 ── -->
+  <div class="rc" id="d-duty">
+    <div class="tl">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">接獲通知後</div>
+            <div class="sa">前往現場 → 確認狀況 → 回報特助</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span><strong>立即前往現場</strong>，與責任區主管確認現場情況</span></li>
+          </ul>
+          <div class="dg">
+            <div class="dg-label">📞 回報特助（確認成災後立即）</div>
+            <div class="dg-text">（地點）起火，已通知相關編組前往滅火，後續狀況再報。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">3</div><span>回報完畢，<strong>移至1F大廳開設指揮中心</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">⚠️ 接獲火勢過大通報</div>
+            <div class="sa">下達疏散指令 → 成立指揮中心</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="tag urgent">🚨 緊急：接獲無法撲滅通報</div>
+          <div class="dg">
+            <div class="dg-label">📞 回報特助</div>
+            <div class="dg-text">（地點）火勢過大、無法撲滅，立即進行全館疏散並通知消防隊前來協助支援。</div>
+          </div>
+          <div class="tag note">📋 若無人接聽依序向上通報：副總 → 總經理 → 特助 → 董事長</div>
+          <div class="dg">
+            <div class="dg-label">📻 無線電通報全館</div>
+            <div class="dg-text">全館將進行疏散，並成立本館指揮中心。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">03</div>
+          <div class="sm">
+            <div class="st">成立指揮中心（1F大廳）</div>
+            <div class="sa">統籌各編組 · 清點人員 · 回報</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span>確認各樓層客房數、人數，請卡室以監視畫面確認疏散狀況</span></li>
+          </ul>
+          <div class="tag note">📋 第一組：搬運飲用水（宴會廳・探索廚房・北緯25，各2員）</div>
+          <div class="tag note">📋 第二組：搬運禦寒衣物（艾美會館・房務部，各2員）</div>
+          <ul class="proc">
+            <li><div class="pn">3</div><span>指示櫃檯人員<strong>取出保險櫃現金</strong>，帶至集結區清點後轉交</span></li>
+          </ul>
+          <div class="dg">
+            <div class="dg-label">📞 人員清點完畢後回報特助</div>
+            <div class="dg-text">旅客及員工均完成核對及清點。</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 避難引導班 ── -->
+  <div class="rc" id="d-guide">
+    <div class="tl">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">接獲通知後</div>
+            <div class="sa">前往指定位置 → 使用交管棒引導疏散</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span>前往指定疏散引導位置（<strong>重要轉折點・安全梯入口・電梯口</strong>）</span></li>
+            <li><div class="pn">2</div><span><strong>使用交管棒</strong>，大聲引導旅客</span></li>
+          </ul>
+          <div class="chant">
+            <div class="chant-label">🔊 引導口令（大聲清晰說出）</div>
+            <div class="chant-text">請往這邊走<br>不要緊張・不要驚慌<br>請勿搭乘電梯</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">3</div><span>電梯停止使用，<strong>將旅客引導至安全梯步行下樓</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">通報班任務</div>
+            <div class="sa">逐間確認包廂並標記</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn" style="border-color:#4AE08A;color:#4AE08A;background:rgba(74,224,138,0.15);font-size:15px;font-weight:900;text-shadow:0 0 8px rgba(74,224,138,0.7);">O</div><span>進入包廂確認無人後，於門上劃<strong style="color:#4AE08A;font-size:1.05em;text-shadow:0 0 6px rgba(74,224,138,0.5);">「O」記號</strong></span></li>
+            <li><div class="pn" style="border-color:#FF4D4D;color:#FF4D4D;background:rgba(255,77,77,0.15);font-size:15px;font-weight:900;text-shadow:0 0 8px rgba(255,77,77,0.7);">Ｘ</div><span>無法進入包廂時，於門上劃<strong style="color:#FF4D4D;font-size:1.05em;text-shadow:0 0 6px rgba(255,77,77,0.5);">「Ｘ」記號</strong></span></li>
+            <li><div class="pn">3</div><span>完成後<strong>向責任區主管回報</strong></span></li>
+          </ul>
+          <div class="dg">
+            <div class="dg-label">📢 向責任區主管回報</div>
+            <div class="dg-text">2F前後場員工均已疏散完畢，並轉往1F集結區集合。</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 工程部（安全防護班）── -->
+  <div class="rc" id="d-eng">
+    <div class="tl">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">班長指揮後・立即執行</div>
+            <div class="sa">緊急關閉設備 → 開啟排煙 → 回報</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="chant">
+            <div class="chant-label">⚡ 工程部緊急應變措施</div>
+            <div class="chant-text">關閉電力<br>關閉空調<br>關閉瓦斯總閥<br>開啟排煙閘門<br>開啟防火區劃之防火門</div>
+          </div>
+          <div class="dg">
+            <div class="dg-label">📢 完成後向班長回報</div>
+            <div class="dg-text">已完成關閉電力、空調、瓦斯，開啟排煙閘門。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">2</div><span>轉移至室內消防栓待命，<strong>協助拉水帶並開水</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">消防隊抵達時</div>
+            <div class="sa">持竣工圖於1F大廳待命</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span>攜帶<strong>竣工圖（含平面圖）</strong>於1F大廳指揮中心待命</span></li>
+            <li><div class="pn">2</div><span>消防隊入館時，<strong>說明火災狀況・災害位置</strong>並協助引導入館</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 集結區 ── -->
+  <div class="rc" id="d-asm">
+    <div class="tl">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">集結區成立</div>
+            <div class="sa">設立救護站 · 清點員工・旅客</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">客務部</div><span>於集結區成立<strong>救護站</strong>，準備輪椅・急救箱</span></li>
+            <li><div class="pn">客務部</div><span>負責<strong>清點並核對旅客名單</strong></span></li>
+            <li><div class="pn">人資部</div><span>負責<strong>清點員工人數</strong>及安全確認</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">人員清點完畢</div>
+            <div class="sa">回報 · 發放物資 · 安撫旅客</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span>清點完畢後<strong>向大廳值班經理（或副總）報告</strong></span></li>
+            <li><div class="pn">2</div><span>搬運<strong>飲用水及禦寒衣物</strong>分發給疏散旅客</span></li>
+            <li><div class="pn">3</div><span>客務部與禮賓部<strong>協助安撫旅客情緒</strong></span></li>
+            <li><div class="pn">4</div><span>公關部負責<strong>對外部單位協調</strong>事宜</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+</div>
+
+<!-- ════════════════════════════════════════════
+     NIGHT MODE
+════════════════════════════════════════════ -->
+<div class="mode-section" id="sec-night">
+<section class="section-wrap">
+  <div class="sec-eyebrow night">🌙 NIGHT MODE · 夜間演練</div>
+  <h2 class="sec-title">夜間自衛消防編組演練</h2>
+  <div class="sec-scenario night">
+    <strong>狀況設定：</strong>R1F機房因電盤過熱導致冒煙起火，觸動偵煙感知器發報。由卡室接獲警報後依程序處置。夜間人員精簡，各編組需迅速應變，確實執行初期滅火與全館疏散。
+  </div>
+
+  <div class="ov-grid">
+    <div class="ov-card night" onclick="showRole('night','n-card')"><div class="ov-dot"></div><div class="ov-num">ROLE 01</div><div class="ov-name">客服中心（卡室）</div></div>
+    <div class="ov-card night" onclick="showRole('night','n-sec')"><div class="ov-dot"></div><div class="ov-num">ROLE 02</div><div class="ov-name">安全部<br>（第一線查看）</div></div>
+    <div class="ov-card night" onclick="showRole('night','n-fire')"><div class="ov-dot"></div><div class="ov-num">ROLE 03</div><div class="ov-name">夜間滅火班<br>（安全部・工程部）</div></div>
+    <div class="ov-card night" onclick="showRole('night','n-guide')"><div class="ov-dot"></div><div class="ov-num">ROLE 04</div><div class="ov-name">夜間避難引導班<br>（房務・夜清・客房餐飲）</div></div>
+    <div class="ov-card night" onclick="showRole('night','n-duty')"><div class="ov-dot"></div><div class="ov-num">ROLE 05</div><div class="ov-name">大廳值班經理</div></div>
+    <div class="ov-card night" onclick="showRole('night','n-asm')"><div class="ov-dot"></div><div class="ov-num">ROLE 06</div><div class="ov-name">集結區處置</div></div>
+  </div>
+
+  <div class="role-tabs" id="night-tabs">
+    <button class="rt night on" onclick="showRole('night','n-card')">客服中心(卡室)</button>
+    <button class="rt night" onclick="showRole('night','n-sec')">安全部(第一線)</button>
+    <button class="rt night" onclick="showRole('night','n-fire')">夜間滅火班</button>
+    <button class="rt night" onclick="showRole('night','n-guide')">夜間引導班</button>
+    <button class="rt night" onclick="showRole('night','n-duty')">大廳值班經理</button>
+    <button class="rt night" onclick="showRole('night','n-asm')">集結區</button>
+  </div>
+
+  <!-- ── 卡室 ── -->
+  <div class="rc on" id="n-card">
+    <div class="tl night">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">警報發報後・立即</div>
+            <div class="sa">下達演習狀況 → 通知各編組</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="dg">
+            <div class="dg-label">📻 對講機通報・下達演習狀況</div>
+            <div class="dg-text">（消防演習）R1F機房火警警報，請依程序處理，完畢。</div>
+          </div>
+          <div class="dg">
+            <div class="dg-label">📻 呼叫滅火班</div>
+            <div class="dg-text">R1F機房火警警報，請立即前往查看，完畢。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">2</div><span><strong>立即通知大廳值班經理</strong>前往現場協助處理</span></li>
+          </ul>
+          <div class="tag note">📋 主管無人接聽 → 職務代理人 → 辦公室同事 → 附近同事</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">確認成災後</div>
+            <div class="sa">聯繫鄰館支援 · 通知驗收哨返回</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span>以電話聯繫<strong>艾麗卡室值班人員</strong>，派員（計2員）前來協助引導旅客</span></li>
+            <li><div class="pn">2</div><span>通知<strong>驗收哨</strong>前往察看，呼叫<strong>巡邏哨</strong>盡速返回卡室接替</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">03</div>
+          <div class="sm">
+            <div class="st">⚠️ 接獲火勢過大通報</div>
+            <div class="sa">全館疏散廣播 · 傳Line通知</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="tag urgent">🚨 緊急：全館疏散</div>
+          <ul class="proc">
+            <li><div class="pn">1</div><span>傳發<strong>Line火災群組訊息</strong>通知各相關單位主管</span></li>
+            <li><div class="pn">2</div><span>請<strong>工程部至新光中控</strong>開啟廣播系統</span></li>
+            <li><div class="pn">3</div><span><strong>播放全館疏散廣播</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 安全部第一線 ── -->
+  <div class="rc" id="n-sec">
+    <div class="tl night">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">接獲通知後・立即前往R1F機房</div>
+            <div class="sa">確認環境 → 開門查看 → 確認起火</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span>立即前往R1F機房，<strong>取滅火器備用</strong></span></li>
+            <li><div class="pn">2</div><span>抵達後進行環境查看</span></li>
+          </ul>
+          <div class="chant">
+            <div class="chant-label">⚠️ 開門前確認程序（絕不省略）</div>
+            <div class="chant-text">觸摸門板・門把確認溫度<br>無異狀再行開門</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">3</div><span>開門後發現起火，<strong>大喊「失火了、失火了！」</strong></span></li>
+          </ul>
+          <div class="dg">
+            <div class="dg-label">📻 無線電回報客服中心</div>
+            <div class="dg-text">R1F機房確定失火，目前正實施初步滅火，後續再報。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">確認起火後・立即</div>
+            <div class="sa">取滅火器實施初步滅火</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="chant">
+            <div class="chant-label">🗣️ 滅火口訣（需大聲複誦）</div>
+            <div class="chant-text">拉插銷 → 拉皮管瞄準火源<br>壓握把 → 對準火源根部左右掃射</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">1</div><span>取滅火器實施滅火，<strong>約10秒</strong></span></li>
+            <li><div class="pn">2</div><span>再取<strong>另一支</strong>滅火器繼續滅火</span></li>
+            <li><div class="pn">3</div><span>待<strong>滅火班長抵達</strong>後，由班長接續指揮</span></li>
+          </ul>
+          <div class="tag note">⚠️ 若你是第一位抵達者：高喊失火了 → 回報客服中心 → 立即取滅火器初步滅火</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 夜間滅火班 ── -->
+  <div class="rc" id="n-fire">
+    <div class="tl night">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">接獲呼叫後</div>
+            <div class="sa">各成員回覆 → 立即前往機房</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">班長</div><span><strong>滅火班班長收到，立即前往處理。</strong></span></li>
+            <li><div class="pn">安全部2</div><span><strong>安全部收到，立即前往處理。</strong></span></li>
+            <li><div class="pn">工程部</div><span><strong>工程部收到，立即前往處理。</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">抵達現場後・班長指揮</div>
+            <div class="sa">工程部緊急措施 → 拉水帶待命</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="chant">
+            <div class="chant-label">⚡ 工程部緊急應變措施</div>
+            <div class="chant-text">關閉電力<br>關閉空調<br>關閉瓦斯總閥<br>開啟排煙閘門<br>開啟防火區劃之防火門</div>
+          </div>
+          <div class="dg">
+            <div class="dg-label">📢 工程部完成後回報班長</div>
+            <div class="dg-text">已完成關閉電力、空調、瓦斯，開啟排煙閘門。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">2</div><span>回報後<strong>協助拉水帶至消防栓待命開水</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">03</div>
+          <div class="sm">
+            <div class="st">水帶就位後</div>
+            <div class="sa">開水 → 直線射水</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">班長</div><span>下達：<strong>「開水。」</strong></span></li>
+            <li><div class="pn">工程部</div><span>複誦：<strong>「開水。」</strong></span></li>
+            <li><div class="pn">水瞄手</div><span><strong>採直線射水，姿勢放低，雙手背內夾</strong></span></li>
+          </ul>
+          <div class="chant">
+            <div class="chant-label">🔊 射水口令</div>
+            <div class="chant-text">採直線射水<br>（滅火失敗轉為霧狀防護）</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">04</div>
+          <div class="sm">
+            <div class="st">⚠️ 火勢過大時</div>
+            <div class="sa">回報 → 撤退 → 工程部持竣工圖待命</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="tag urgent">🚨 緊急：火勢擴大</div>
+          <div class="dg">
+            <div class="dg-label">📻 班長回報客服中心</div>
+            <div class="dg-text">火勢過大無法撲滅，向上通報，立即進行全館疏散。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">1</div><span>班長指示<strong>安全防護班（工程部）持竣工圖</strong>至大廳前待命</span></li>
+            <li><div class="pn">2</div><span>消防隊抵達後<strong>向其指引災害位置</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 夜間引導班 ── -->
+  <div class="rc" id="n-guide">
+    <div class="tl night">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">接獲通知後</div>
+            <div class="sa">1F客梯前集結 → 待命任務分配</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">房務部</div><span><strong>收到，立即前往1F客梯前集結。</strong></span></li>
+            <li><div class="pn">夜清領班</div><span><strong>收到，立即前往1F客梯前集結。</strong></span></li>
+            <li><div class="pn">客房餐飲</div><span><strong>收到，立即前往1F客梯前集結。</strong></span></li>
+          </ul>
+          <p>集結完成後待命任務分配，<strong>立即回報值班經理</strong>知悉。</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">確認成災後・分層引導</div>
+            <div class="sa">依指定樓層引導旅客疏散</div>
+          </div>
+        </div>
+        <div class="sb">
+          <p>由大廳值班經理完成任務分配至指定位置，進行引導疏散：</p>
+          <div class="tag note">🏨 分層引導範例：客房餐飲 → 9-12F・房務部 → 5-8F・公清 → B3-3F</div>
+          <div class="chant">
+            <div class="chant-label">🔊 引導口令（使用交管棒・大聲清晰）</div>
+            <div class="chant-text">請往這邊走<br>不要緊張・不要驚慌<br>請勿搭乘電梯</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 夜間大廳值班經理 ── -->
+  <div class="rc" id="n-duty">
+    <div class="tl night">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">接獲通知後</div>
+            <div class="sa">前往現場 → 確認成災 → 回報特助</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span><strong>立即前往現場</strong>指揮事宜</span></li>
+            <li><div class="pn">2</div><span><strong>傳發Line群組訊息</strong>通知相關主管知悉</span></li>
+          </ul>
+          <div class="dg">
+            <div class="dg-label">📞 確認成災後立即回報特助</div>
+            <div class="dg-text">R1F機房起火，已通知相關編組前往初期滅火，後續狀況再報。</div>
+          </div>
+          <div class="tag note">📋 無人接聽依序：副總 → 總經理 → 特助 → 董事長</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">⚠️ 火勢擴大時</div>
+            <div class="sa">成立指揮中心 → 下達疏散指令</div>
+          </div>
+        </div>
+        <div class="sb">
+          <div class="tag urgent">🚨 緊急：接獲無法撲滅通報</div>
+          <div class="dg">
+            <div class="dg-label">📞 回報特助</div>
+            <div class="dg-text">R1F機房火勢過大、無法撲滅，立即進行全館疏散並通知消防隊前來協助支援。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">1</div><span>傳發<strong>Line群組訊息</strong>通知相關主管</span></li>
+            <li><div class="pn">2</div><span><strong>於1F大廳前成立指揮中心</strong></span></li>
+            <li><div class="pn">3</div><span>指揮<strong>避難引導班</strong>至指定位置進行引導疏散</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">03</div>
+          <div class="sm">
+            <div class="st">集結完畢後</div>
+            <div class="sa">清點人員 → 回報 → 安撫旅客</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span>各編組班長集結完畢後<strong>清點人員並回報</strong></span></li>
+            <li><div class="pn">2</div><span>旅客核對清點完成後，電話回報特助</span></li>
+          </ul>
+          <div class="dg">
+            <div class="dg-label">📞 電話回報特助</div>
+            <div class="dg-text">旅客及員工均完成核對及清點。</div>
+          </div>
+          <ul class="proc">
+            <li><div class="pn">3</div><span>依編組至<strong>B2取防寒衣物及飲用水</strong>，立即分配給客人並安撫情緒</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 夜間集結區 ── -->
+  <div class="rc" id="n-asm">
+    <div class="tl night">
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">01</div>
+          <div class="sm">
+            <div class="st">全館疏散後</div>
+            <div class="sa">集結區設立 · 各編組清點人員</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span>各編組成員集結完畢，<strong>先實施各編組人員清點</strong></span></li>
+            <li><div class="pn">2</div><span>清點無誤後<strong>立即回報大廳值班經理</strong>知悉</span></li>
+            <li><div class="pn">3</div><span>分配各編組班長進行<strong>旅客核對清點</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sh">
+          <div class="sn">02</div>
+          <div class="sm">
+            <div class="st">旅客安置</div>
+            <div class="sa">發放物資 · 安撫情緒 · 最終回報</div>
+          </div>
+        </div>
+        <div class="sb">
+          <ul class="proc">
+            <li><div class="pn">1</div><span>至<strong>B2取防寒衣物及飲用水</strong>，立即分配給客人使用</span></li>
+            <li><div class="pn">2</div><span>進行<strong>安撫旅客情緒</strong></span></li>
+          </ul>
+          <div class="dg">
+            <div class="dg-label">📞 清點完成後電話回報特助</div>
+            <div class="dg-text">旅客及員工均完成核對及清點。</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <strong>🔥 自衛消防編組演練指南</strong>
+  本指南依據演練大綱及腳本整理 · 各編組成員請確實熟記職責與台詞 · 演練至熟練為止
+</footer>
+
+<script>
+function showMode(mode) {
+  // 隱藏home + 所有mode-section
+  document.getElementById('sec-home').style.display = 'none';
+  document.querySelectorAll('.mode-section').forEach(s => s.classList.remove('on'));
+
+  // 更新nav
+  document.querySelectorAll('.hd-btn').forEach(b => b.classList.remove('on'));
+
+  if (mode === 'home') {
+    document.getElementById('sec-home').style.display = 'flex';
+    document.querySelectorAll('.hd-btn')[0].classList.add('on');
+  } else if (mode === 'day') {
+    document.getElementById('sec-day').classList.add('on');
+    document.querySelectorAll('.hd-btn')[1].classList.add('on');
+    setTimeout(() => document.getElementById('sec-day').scrollIntoView({ behavior:'smooth' }), 50);
+  } else if (mode === 'night') {
+    document.getElementById('sec-night').classList.add('on');
+    document.querySelectorAll('.hd-btn')[2].classList.add('on');
+    setTimeout(() => document.getElementById('sec-night').scrollIntoView({ behavior:'smooth' }), 50);
+  }
+}
+
+function showRole(mode, roleId) {
+  const prefix = mode === 'day' ? 'd-' : 'n-';
+  const allIds = mode === 'day'
+    ? ['d-resp','d-mgr','d-call','d-fire','d-duty','d-guide','d-eng','d-asm']
+    : ['n-card','n-sec','n-fire','n-guide','n-duty','n-asm'];
+
+  allIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('on');
+  });
+
+  const target = document.getElementById(roleId);
+  if (target) target.classList.add('on');
+
+  const tabsEl = document.getElementById(mode + '-tabs');
+  if (tabsEl) {
+    tabsEl.querySelectorAll('.rt').forEach(t => t.classList.remove('on'));
+    tabsEl.querySelectorAll('.rt').forEach(t => {
+      if (t.getAttribute('onclick') && t.getAttribute('onclick').includes(roleId)) {
+        t.classList.add('on');
+      }
+    });
+  }
+
+  // overview card highlight
+  document.querySelectorAll('.ov-card').forEach(c => c.classList.remove('sel'));
+  document.querySelectorAll('.ov-card').forEach(c => {
+    if (c.getAttribute('onclick') && c.getAttribute('onclick').includes(roleId)) {
+      c.classList.add('sel');
+    }
+  });
+}
+
+// init
+document.getElementById('sec-home').style.display = 'flex';
+</script>
+</body>
+</html>
